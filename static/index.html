@@ -598,7 +598,7 @@ body.loggedin #mainWrap{margin-left:220px;}
 
 <script>
 'use strict';
-const API = 'http://localhost:5000/api';
+const API = window.location.origin + '/api';
 
 const S = {
   uid:null, name:'', upi:'', bal:0,
@@ -746,7 +746,7 @@ async function doLogin(){
     if(!r.ok){er.textContent=d.error||'Login failed';er.style.display='block';return;}
     localStorage.setItem('ap_u',JSON.stringify(d));
     loginOK(d);
-  }catch(e){er.textContent='Cannot reach server.\n\nMake sure Flask is running:\n  python app.py\n\nThen open: http://localhost:5000';er.style.display='block';}
+  }catch(e){er.textContent='Cannot reach server. Please try again.';er.style.display='block';}
   finally{bt.textContent='Sign In 🎤';bt.disabled=false;}
 }
 
