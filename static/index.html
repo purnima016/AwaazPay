@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AwaazPay — Voice Banking for Women</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;font-family:'Sora',sans-serif;color:#f0eeff;background:#05040f;overflow-x:hidden}
+button,input{font-family:'Sora',sans-serif;outline:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:rgba(155,109,255,.4);border-radius:3px}
+:root{--p:#9b6dff;--c:#00d4ff;--g:#ffd700;--pk:#ff6eb4;--gn:#00ff9d;--mu:rgba(255,255,255,.45)}
+
+@keyframes fadeUp   {from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ring1    {0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.18);opacity:.15}}
+@keyframes ring2    {0%,100%{transform:scale(.82);opacity:.5}50%{transform:scale(1.32);opacity:.08}}
+@keyframes glowP    {0%,100%{box-shadow:0 0 22px rgba(155,109,255,.55),0 0 55px rgba(155,109,255,.2)}50%{box-shadow:0 0 60px rgba(155,109,255,1),0 0 130px rgba(155,109,255,.5),0 0 220px rgba(0,212,255,.3)}}
+@keyframes tilt     {0%,100%{transform:perspective(1200px) rotateX(3deg) rotateY(-5deg)}50%{transform:perspective(1200px) rotateX(-2deg) rotateY(5deg)}}
+@keyframes shimmer  {0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes popIn    {0%{transform:scale(0) rotate(-12deg);opacity:0}65%{transform:scale(1.18) rotate(3deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+@keyframes waveBar  {0%,100%{height:5px}50%{height:var(--wh,28px)}}
+@keyframes fly      {0%{transform:translateY(0) translateX(0) scale(1);opacity:.9}100%{transform:translateY(-160px) translateX(var(--fx,0px)) scale(.15);opacity:0}}
+@keyframes dotBounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+@keyframes micPulse {0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes toastIn  {from{opacity:0;transform:translateX(-50%) translateY(-14px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes float    {0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes slideIn  {from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── Glass cards ── */
+.gl{background:rgba(255,255,255,.048);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.09);border-radius:16px}
+.gs{background:rgba(255,255,255,.072);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.13);border-radius:16px}
+
+/* ── Buttons ── */
+.btn{background:linear-gradient(135deg,var(--p),var(--c));border:none;color:#fff;font-weight:700;cursor:pointer;border-radius:12px;padding:14px 28px;font-size:15px;width:100%;box-shadow:0 8px 24px rgba(155,109,255,.4);transition:all .25s;font-family:'Sora';letter-spacing:.3px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(155,109,255,.6)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.gbt{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.65);cursor:pointer;border-radius:12px;padding:13px 24px;font-size:14px;width:100%;transition:all .2s;font-family:'Sora'}
+.gbt:hover{background:rgba(255,255,255,.09);color:#fff}
+
+/* ── Screens (content panels) ── */
+.sc{display:none;animation:fadeUp .32s ease}
+.sc.on{display:block}
+
+/* ── Inputs ── */
+.inp{width:100%;padding:13px 16px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.11);border-radius:10px;color:#fff;font-size:15px;transition:all .2s;font-family:'Sora'}
+.inp:focus{border-color:rgba(155,109,255,.75);background:rgba(155,109,255,.09);box-shadow:0 0 0 3px rgba(155,109,255,.16)}
+.inp::placeholder{color:rgba(255,255,255,.28)}
+.lbl{display:block;font-size:10px;color:var(--mu);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
+
+/* ── Nav link ── */
+.navlink{background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;color:var(--mu);font-size:14px;font-weight:600;font-family:'Sora';transition:all .2s;white-space:nowrap}
+.navlink:hover{background:rgba(255,255,255,.06);color:#fff}
+.navlink.on{background:rgba(155,109,255,.15);color:var(--p)}
+
+/* ── Pin dot ── */
+.pd{width:54px;height:54px;border-radius:14px;border:1px solid rgba(155,109,255,.28);background:rgba(155,109,255,.07);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.pd.fl{border-color:var(--p);background:rgba(155,109,255,.22)}
+
+/* ── Wave bar ── */
+.wb{width:4px;border-radius:2px;background:rgba(255,255,255,.14);height:5px;transition:all .3s}
+.wb.on{background:linear-gradient(var(--p),var(--c));animation:waveBar .4s ease-in-out infinite alternate}
+
+/* ── Dot loader ── */
+.dl span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--p);margin:0 3px;animation:dotBounce 1.2s ease-in-out infinite}
+.dl span:nth-child(2){animation-delay:.2s}
+.dl span:nth-child(3){animation-delay:.4s}
+
+/* ── Quick action card ── */
+.qa{padding:20px;cursor:pointer;transition:all .2s;border-radius:16px}
+.qa:hover{transform:translateY(-4px)}
+.qa:active{transform:scale(.97)}
+
+/* ── Website layout ── */
+body{display:flex;flex-direction:column;min-height:100vh}
+
+/* Top navbar */
+#topNav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:64px;
+  background:rgba(5,4,15,.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(155,109,255,.18);
+  display:flex;align-items:center;padding:0 32px;gap:0;
+}
+
+/* Sidebar */
+#sidebar{
+  position:fixed;top:64px;left:0;bottom:0;width:220px;z-index:100;
+  background:rgba(7,6,26,.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-right:1px solid rgba(155,109,255,.14);
+  display:none;flex-direction:column;padding:20px 12px;gap:4px;
+  overflow-y:auto;
+}
+
+/* Main content area */
+#mainWrap{
+  margin-top:64px;
+  margin-left:0;
+  flex:1;
+  transition:margin-left .3s;
+  min-height:calc(100vh - 64px);
+  position:relative;
+}
+
+/* When logged in, sidebar is visible */
+body.loggedin #sidebar{display:flex;}
+body.loggedin #mainWrap{margin-left:220px;}
+
+/* Content panel */
+#contentArea{
+  padding:32px 40px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+@media(max-width:900px){
+  body.loggedin #sidebar{display:none}
+  body.loggedin #mainWrap{margin-left:0}
+  #contentArea{padding:20px 16px}
+  #topNav{padding:0 16px}
+}
+
+/* Grid layouts */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1100px){.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.grid4{grid-template-columns:1fr 1fr}}
+
+/* Section title */
+.sec-title{font-size:11px;color:var(--mu);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+
+/* Page title */
+.page-title{font-size:26px;font-weight:800;margin-bottom:6px;background:linear-gradient(135deg,#fff,var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-sub{font-size:13px;color:var(--mu);margin-bottom:28px}
+</style>
+</head>
+<body>
+<canvas id="cv" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
+
+<!-- ══════════════════════════════════════════
+     TOP NAVIGATION BAR
+══════════════════════════════════════════ -->
+<nav id="topNav">
+  <!-- Logo -->
+  <div style="display:flex;align-items:center;gap:12px;margin-right:auto">
+    <div style="width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 16px rgba(155,109,255,.5)">🎤</div>
+    <div>
+      <span style="font-size:18px;font-weight:800;background:linear-gradient(135deg,#fff,var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent">AwaazPay</span>
+      <span style="font-size:10px;color:var(--mu);margin-left:8px;letter-spacing:1px;vertical-align:middle">VOICE BANKING</span>
+    </div>
+  </div>
+
+  <!-- Nav links (shown when logged in) -->
+  <div id="navLinks" style="display:none;align-items:center;gap:4px">
+    <button class="navlink on" id="nl-HS" onclick="goTo('HS')">⊞ Home</button>
+    <button class="navlink" id="nl-VS" onclick="goTo('VS')">🎤 Pay</button>
+    <button class="navlink" id="nl-HiS" onclick="goTo('HiS')">☰ History</button>
+    <button class="navlink" id="nl-PRS" onclick="goTo('PRS')">🔒 Security</button>
+  </div>
+
+  <!-- Right side -->
+  <div style="display:flex;align-items:center;gap:12px;margin-left:24px">
+    <!-- Security badges -->
+    <div id="secBadges" style="display:flex;gap:8px">
+      <span style="font-size:10px;padding:4px 10px;border-radius:8px;background:rgba(0,255,157,.1);border:1px solid rgba(0,255,157,.3);color:var(--gn);font-weight:600">🔒 256-bit AES</span>
+      <span style="font-size:10px;padding:4px 10px;border-radius:8px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--c);font-weight:600;display:none" id="secLive">● LIVE</span>
+    </div>
+    <!-- User avatar (shown when logged in) -->
+    <div id="navUser" style="display:none;align-items:center;gap:10px">
+      <div id="navUpi" style="font-size:11px;color:var(--c);font-family:'JetBrains Mono'"></div>
+      <div id="navAv" style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;cursor:pointer" onclick="goTo('PRS')">P</div>
+      <button onclick="doLogout()" style="padding:7px 14px;border-radius:9px;background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.2);color:#ff8080;cursor:pointer;font-size:12px;font-weight:600;font-family:'Sora'">⏻ Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════════ -->
+<aside id="sidebar">
+  <!-- User info -->
+  <div style="padding:16px;margin-bottom:8px;background:rgba(155,109,255,.08);border-radius:14px;border:1px solid rgba(155,109,255,.2)">
+    <div id="sbAvatar" style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;margin-bottom:10px">P</div>
+    <p id="sbName" style="font-size:14px;font-weight:700">—</p>
+    <p id="sbUpi" style="font-size:10px;color:var(--c);font-family:'JetBrains Mono';margin-top:3px">—</p>
+  </div>
+
+  <!-- Nav items -->
+  <button class="navlink on" id="sb-HS" onclick="goTo('HS')" style="justify-content:flex-start;width:100%">⊞ &nbsp;Home</button>
+  <button class="navlink" id="sb-VS" onclick="goTo('VS')" style="justify-content:flex-start;width:100%">🎤 &nbsp;Voice Pay</button>
+  <button class="navlink" id="sb-BPS" onclick="goTo('BPS')" style="justify-content:flex-start;width:100%">💰 &nbsp;Check Balance</button>
+  <button class="navlink" id="sb-HiS" onclick="goTo('HiS')" style="justify-content:flex-start;width:100%">☰ &nbsp;History</button>
+  <button class="navlink" id="sb-PRS" onclick="goTo('PRS')" style="justify-content:flex-start;width:100%">🔒 &nbsp;Security</button>
+
+  <!-- Bottom info -->
+  <div style="margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)">
+    <div style="padding:12px;background:rgba(0,255,157,.06);border-radius:12px;border:1px solid rgba(0,255,157,.18)">
+      <p style="font-size:10px;color:var(--gn);font-weight:700;margin-bottom:4px">🛡 All Systems Secure</p>
+      <p style="font-size:10px;color:var(--mu);line-height:1.4">AES-256 · RBI Compliant · PIN Auth</p>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════════════════════════════════════
+     LOGIN PAGE (full page, no sidebar)
+══════════════════════════════════════════ -->
+<div id="LP" style="position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:24px;background:#05040f">
+  <div style="width:100%;max-width:440px;animation:fadeUp .55s ease">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="width:90px;height:90px;border-radius:28px;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto;animation:glowP 2.5s ease-in-out infinite">🎤</div>
+      <h1 style="font-size:34px;font-weight:800;margin-top:16px;background:linear-gradient(135deg,#fff,var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent">AwaazPay</h1>
+      <p style="font-size:13px;color:var(--mu);margin-top:6px;letter-spacing:2px;text-transform:uppercase">Voice Banking for Women</p>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <span style="font-size:11px;padding:5px 12px;border-radius:8px;background:rgba(0,255,157,.1);border:1px solid rgba(0,255,157,.3);color:var(--gn);font-weight:600">🔒 256-bit AES</span>
+        <span style="font-size:11px;padding:5px 12px;border-radius:8px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--c);font-weight:600">✅ RBI Compliant</span>
+        <span style="font-size:11px;padding:5px 12px;border-radius:8px;background:rgba(155,109,255,.1);border:1px solid rgba(155,109,255,.3);color:var(--p);font-weight:600">🌐 4 Languages</span>
+      </div>
+    </div>
+    <div class="gs" style="padding:32px">
+      <p style="font-size:13px;color:var(--mu);text-align:center;margin-bottom:22px">Sign in to your account</p>
+      <div style="margin-bottom:16px">
+        <label class="lbl">Phone Number</label>
+        <input id="lph" class="inp" type="tel" placeholder="Enter phone number" maxlength="10" onkeydown="if(event.key==='Enter')document.getElementById('lpn').focus()"/>
+      </div>
+      <div style="margin-bottom:24px">
+        <label class="lbl">UPI PIN</label>
+        <div style="position:relative">
+          <input id="lpn" class="inp" type="password" placeholder="Enter 4 digit PIN" maxlength="4" style="padding-right:46px" onkeydown="if(event.key==='Enter')doLogin()"/>
+          <button onclick="var e=document.getElementById('lpn');e.type=e.type==='password'?'text':'password';this.textContent=e.type==='password'?'👁':'🙈'" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--mu);cursor:pointer;font-size:15px">👁</button>
+        </div>
+      </div>
+      <button class="btn" onclick="doLogin()" id="lbt" style="font-size:16px;padding:16px">Sign In 🎤</button>
+      <div id="ler" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);border-radius:10px;font-size:13px;color:#ff8080;text-align:center;line-height:1.6"></div>
+      <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.07);text-align:center">
+        <p style="font-size:12px;color:rgba(255,255,255,.3);line-height:1.6">Enter your registered phone number<br>and UPI PIN to sign in securely.</p>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:11px;color:rgba(255,255,255,.2);margin-top:16px">🎤 Use Google Chrome for voice features</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN APP WRAPPER
+══════════════════════════════════════════ -->
+<div id="AP" style="display:none">
+<div id="mainWrap">
+<div id="contentArea" style="position:relative;z-index:1">
+
+  <!-- ════════ HOME ════════ -->
+  <div id="HS" class="sc on">
+    <div style="animation:fadeUp .4s ease">
+      <p id="gr" style="font-size:11px;color:var(--mu);letter-spacing:1px;text-transform:uppercase">Good Morning 👋</p>
+      <h2 id="hn" class="page-title" style="margin-top:4px">Loading...</h2>
+    </div>
+
+    <!-- Top row: Balance card + Mic -->
+    <div class="grid2" style="margin-bottom:24px;animation:fadeUp .45s ease">
+
+      <!-- Balance Card -->
+      <div class="gl" style="padding:28px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(155,109,255,.14),rgba(0,212,255,.09));border:1px solid rgba(155,109,255,.28);animation:tilt 7s ease-in-out infinite">
+        <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(155,109,255,.25),transparent)"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.03) 50%,transparent 70%);background-size:200% 200%;animation:shimmer 4s linear infinite"></div>
+        <p style="font-size:10px;color:var(--mu);letter-spacing:2px;text-transform:uppercase">Account Balance</p>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:10px">
+          <div id="balMasked" style="font-size:36px;font-weight:800;color:rgba(255,255,255,.35);letter-spacing:8px">•••••</div>
+          <div id="balReal" style="display:none;font-size:40px;font-weight:800;background:linear-gradient(135deg,#fff,var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent"></div>
+          <button onclick="toggleBal()" id="balEye" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;width:40px;height:40px;color:var(--mu);cursor:pointer;font-size:17px;flex-shrink:0">👁</button>
+        </div>
+        <div style="display:flex;gap:24px;margin-top:18px;flex-wrap:wrap">
+          <div><p style="font-size:10px;color:rgba(255,255,255,.35)">UPI ID</p><p id="hu" style="font-size:12px;color:var(--c);font-family:'JetBrains Mono';margin-top:4px">loading...</p></div>
+          <div><p style="font-size:10px;color:rgba(255,255,255,.35)">ACCOUNT</p><p style="font-size:12px;color:rgba(255,255,255,.6);font-family:'JetBrains Mono';margin-top:4px">•••• 4821</p></div>
+          <div style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(0,255,157,.12);color:var(--gn);border:1px solid rgba(0,255,157,.3);display:flex;align-items:center;gap:6px;align-self:flex-end"><div style="width:7px;height:7px;border-radius:50%;background:var(--gn)"></div>Active</div>
+        </div>
+        <div style="position:absolute;top:22px;right:22px;width:34px;height:24px;border-radius:5px;background:linear-gradient(135deg,rgba(255,215,0,.5),rgba(255,215,0,.2));border:1px solid rgba(255,215,0,.4)"></div>
+      </div>
+
+      <!-- Mic CTA Card -->
+      <div class="gl" style="padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;border:1px solid rgba(155,109,255,.2);background:linear-gradient(135deg,rgba(155,109,255,.08),transparent)" onclick="goTo('VS')">
+        <div style="position:relative">
+          <div style="position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(155,109,255,.18);animation:ring2 3.5s ease-in-out infinite;pointer-events:none"></div>
+          <div style="position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(0,212,255,.12);animation:ring1 2.8s ease-in-out infinite;pointer-events:none"></div>
+          <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:40px;animation:glowP 2.5s ease-in-out infinite;box-shadow:0 0 40px rgba(155,109,255,.6),0 0 80px rgba(155,109,255,.3);position:relative;z-index:2">🎤</div>
+        </div>
+        <h3 style="margin-top:20px;font-size:18px;font-weight:700">Tap to Speak</h3>
+        <p style="font-size:12px;color:var(--mu);margin-top:6px">Telugu, Hindi, Tamil, English</p>
+        <p style="font-size:11px;color:rgba(255,255,255,.25);margin-top:4px">Auto language detection</p>
+        <div style="margin-top:16px;padding:8px 18px;border-radius:20px;background:rgba(155,109,255,.15);border:1px solid rgba(155,109,255,.3);font-size:12px;color:var(--p);font-weight:600">Start Voice Pay →</div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid3" style="margin-bottom:24px;animation:fadeUp .5s ease">
+      <div class="gl" style="padding:20px;text-align:center">
+        <p style="font-size:28px">↑</p>
+        <p id="stxn" style="font-size:22px;font-weight:800;margin-top:6px;color:var(--pk)">0</p>
+        <p style="font-size:11px;color:var(--mu);margin-top:4px;letter-spacing:.5px">TRANSACTIONS SENT</p>
+      </div>
+      <div class="gl" style="padding:20px;text-align:center">
+        <p style="font-size:28px">⚡</p>
+        <p style="font-size:22px;font-weight:800;margin-top:6px;color:var(--c)">IMPS</p>
+        <p style="font-size:11px;color:var(--mu);margin-top:4px;letter-spacing:.5px">INSTANT TRANSFER</p>
+      </div>
+      <div class="gl" style="padding:20px;text-align:center">
+        <p style="font-size:28px">🔒</p>
+        <p style="font-size:22px;font-weight:800;margin-top:6px;color:var(--gn)">AES-256</p>
+        <p style="font-size:11px;color:var(--mu);margin-top:4px;letter-spacing:.5px">ENCRYPTION</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div style="animation:fadeUp .6s ease;margin-bottom:24px">
+      <p class="sec-title">Quick Actions</p>
+      <div class="grid4">
+        <div class="gl qa" onclick="goTo('VS')" style="border:1px solid rgba(155,109,255,.18);background:linear-gradient(135deg,rgba(155,109,255,.08),transparent)">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(155,109,255,.15);border:1px solid rgba(155,109,255,.3);display:flex;align-items:center;justify-content:center;font-size:20px">💸</div>
+          <p style="font-size:15px;font-weight:700;margin-top:12px">Send Money</p>
+          <p style="font-size:11px;color:var(--mu);margin-top:4px">Voice + PIN secured</p>
+        </div>
+        <div class="gl qa" onclick="goTo('BPS')" style="border:1px solid rgba(0,212,255,.18);background:linear-gradient(135deg,rgba(0,212,255,.08),transparent)">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.3);display:flex;align-items:center;justify-content:center;font-size:20px">💰</div>
+          <p style="font-size:15px;font-weight:700;margin-top:12px">Check Balance</p>
+          <p style="font-size:11px;color:var(--mu);margin-top:4px">PIN required</p>
+        </div>
+        <div class="gl qa" onclick="goTo('HiS')" style="border:1px solid rgba(255,215,0,.18);background:linear-gradient(135deg,rgba(255,215,0,.08),transparent)">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.3);display:flex;align-items:center;justify-content:center;font-size:20px">📋</div>
+          <p style="font-size:15px;font-weight:700;margin-top:12px">History</p>
+          <p style="font-size:11px;color:var(--mu);margin-top:4px">All transactions</p>
+        </div>
+        <div class="gl qa" onclick="goTo('PRS')" style="border:1px solid rgba(255,110,180,.18);background:linear-gradient(135deg,rgba(255,110,180,.08),transparent)">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,110,180,.15);border:1px solid rgba(255,110,180,.3);display:flex;align-items:center;justify-content:center;font-size:20px">🔒</div>
+          <p style="font-size:15px;font-weight:700;margin-top:12px">Security</p>
+          <p style="font-size:11px;color:var(--mu);margin-top:4px">Profile & settings</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security info -->
+    <div style="animation:fadeUp .7s ease">
+      <div class="gl" style="padding:24px;background:linear-gradient(135deg,rgba(0,255,157,.06),rgba(155,109,255,.06));border:1px solid rgba(0,255,157,.2)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span style="font-size:28px">🛡</span>
+          <div><p style="font-size:16px;font-weight:700;color:var(--gn)">Your account is secure</p><p style="font-size:12px;color:var(--mu);margin-top:3px">All data encrypted end-to-end</p></div>
+          <div style="margin-left:auto;padding:7px 16px;border-radius:20px;background:rgba(0,255,157,.12);border:1px solid rgba(0,255,157,.3);color:var(--gn);font-size:11px;font-weight:700">✅ SECURE</div>
+        </div>
+        <div class="grid4">
+          <div style="padding:12px 14px;background:rgba(0,255,157,.08);border-radius:12px;border:1px solid rgba(0,255,157,.2)"><p style="font-size:11px;color:var(--gn);font-weight:700">🔒 AES-256</p><p style="font-size:11px;color:var(--mu);margin-top:4px">Encryption</p></div>
+          <div style="padding:12px 14px;background:rgba(155,109,255,.08);border-radius:12px;border:1px solid rgba(155,109,255,.2)"><p style="font-size:11px;color:var(--p);font-weight:700">🔐 PIN Auth</p><p style="font-size:11px;color:var(--mu);margin-top:4px">Every transaction</p></div>
+          <div style="padding:12px 14px;background:rgba(0,212,255,.08);border-radius:12px;border:1px solid rgba(0,212,255,.2)"><p style="font-size:11px;color:var(--c);font-weight:700">✅ RBI Compliant</p><p style="font-size:11px;color:var(--mu);margin-top:4px">Regulatory</p></div>
+          <div style="padding:12px 14px;background:rgba(255,215,0,.08);border-radius:12px;border:1px solid rgba(255,215,0,.2)"><p style="font-size:11px;color:var(--g);font-weight:700">📱 SMS Fallback</p><p style="font-size:11px;color:var(--mu);margin-top:4px">Offline mode</p></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /HS -->
+
+  <!-- ════════ VOICE PAY ════════ -->
+  <div id="VS" class="sc">
+    <p class="page-title">🎤 Voice Pay</p>
+    <p class="page-sub">Speak in any language — AI detects automatically</p>
+
+    <div class="grid2" style="align-items:start">
+
+      <!-- Left: Mic + transcript -->
+      <div>
+        <!-- Step indicator -->
+        <div class="gl" style="padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:0">
+          <div id="s1" style="display:flex;align-items:center;gap:8px;flex:1">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--p);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">1</div>
+            <p style="font-size:12px;font-weight:600;color:var(--p)">Speak</p>
+          </div>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div>
+          <div id="s2" style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center">
+            <div id="s2dot" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.4);flex-shrink:0">2</div>
+            <p id="s2txt" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.35)">Confirm</p>
+          </div>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div>
+          <div id="s3" style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+            <div id="s3dot" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.4);flex-shrink:0">3</div>
+            <p id="s3txt" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.35)">PIN</p>
+          </div>
+        </div>
+
+        <!-- Mic button area -->
+        <div id="phMic" class="gl" style="padding:40px;display:flex;flex-direction:column;align-items:center;text-align:center;border:1px solid rgba(155,109,255,.2)">
+          <!-- Language badge -->
+          <div id="langBadge" style="display:none;padding:7px 16px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid rgba(155,109,255,.4);background:rgba(155,109,255,.15);color:var(--p);margin-bottom:20px">EN</div>
+
+          <div style="position:relative;margin-bottom:24px">
+            <div style="position:absolute;inset:-28px;border-radius:50%;border:1px solid rgba(155,109,255,.1);animation:ring2 4s ease-in-out infinite;pointer-events:none"></div>
+            <div style="position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(0,212,255,.08);animation:ring1 3.2s ease-in-out infinite;pointer-events:none"></div>
+            <div id="micBtn" onclick="toggleListen()" style="width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:64px;cursor:pointer;animation:glowP 2.5s ease-in-out infinite;box-shadow:0 0 40px rgba(155,109,255,.6),0 0 80px rgba(155,109,255,.3);position:relative;z-index:2;user-select:none;-webkit-tap-highlight-color:transparent;transition:all .3s">🎤</div>
+          </div>
+
+          <div id="wf" style="display:flex;gap:4px;align-items:center;height:52px;margin-bottom:16px"></div>
+
+          <div id="micStatusBox" style="padding:12px 24px;border-radius:14px;background:rgba(155,109,255,.1);border:1px solid rgba(155,109,255,.22);width:100%">
+            <p id="micStatus" style="font-size:14px;font-weight:600;color:var(--mu)">▶ Click the microphone to speak</p>
+            <p id="micHint" style="font-size:11px;color:rgba(255,255,255,.3);margin-top:5px">Telugu, Hindi, Tamil, English — any language</p>
+          </div>
+
+          <!-- Live transcript -->
+          <div id="liveBox" style="display:none;margin-top:16px;width:100%;padding:14px 18px;background:rgba(155,109,255,.08);border:1px solid rgba(155,109,255,.25);border-radius:14px;text-align:left">
+            <p style="font-size:10px;color:var(--p);letter-spacing:1.5px;margin-bottom:6px;font-weight:600">🗣 HEARING</p>
+            <p id="liveTxt" style="font-size:16px;font-weight:600;line-height:1.4;min-height:26px"></p>
+          </div>
+        </div>
+
+        <!-- Confirm phase -->
+        <div id="phConfirm" style="display:none;animation:slideIn .3s ease">
+          <div id="langBanner" style="padding:14px 18px;border-radius:14px;margin-bottom:16px;text-align:center;border:1px solid">
+            <p id="langBannerTxt" style="font-size:14px;font-weight:700">Language Detected</p>
+            <p id="langBannerSub" style="font-size:12px;margin-top:3px;opacity:.7">Continuing in this language</p>
+          </div>
+          <div class="gl" style="padding:16px 18px;margin-bottom:14px;border:1px solid rgba(0,212,255,.2)">
+            <p style="font-size:10px;color:var(--c);letter-spacing:1.5px;font-weight:600;margin-bottom:7px">🗣 YOU SAID</p>
+            <p id="cfHeard" style="font-size:15px;font-weight:600;line-height:1.4;color:#fff"></p>
+          </div>
+          <div class="gl" style="padding:20px;margin-bottom:16px">
+            <p style="font-size:10px;color:var(--gn);letter-spacing:1.5px;font-weight:600;margin-bottom:14px">🤖 AI UNDERSTOOD</p>
+            <div class="grid2" style="margin-bottom:14px">
+              <div style="padding:14px;background:rgba(155,109,255,.08);border-radius:12px;border:1px solid rgba(155,109,255,.2)">
+                <p style="font-size:10px;color:var(--mu)">RECIPIENT</p>
+                <p id="cfRecipient" style="font-size:18px;font-weight:800;margin-top:5px;color:#fff">—</p>
+              </div>
+              <div style="padding:14px;background:rgba(0,255,157,.08);border-radius:12px;border:1px solid rgba(0,255,157,.2)">
+                <p style="font-size:10px;color:var(--mu)">AMOUNT</p>
+                <p id="cfAmount" style="font-size:18px;font-weight:800;margin-top:5px;color:var(--gn)">—</p>
+              </div>
+            </div>
+            <div style="padding:14px 16px;background:rgba(255,255,255,.04);border-radius:12px;border-left:3px solid var(--p)">
+              <p id="cfQuestion" style="font-size:14px;font-weight:600;color:#fff;line-height:1.5"></p>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button onclick="resetVoice()" class="gbt" style="flex:1;padding:14px">✕ Cancel</button>
+            <button onclick="goToPin()" class="btn" style="flex:2;background:linear-gradient(135deg,var(--gn),#00b8a9);box-shadow:0 8px 24px rgba(0,255,157,.3)">✓ Yes, Proceed →</button>
+          </div>
+          <p id="cfErr" style="display:none;margin-top:12px;padding:11px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);border-radius:10px;font-size:13px;color:#ff8080;text-align:center"></p>
+        </div>
+
+        <!-- PIN phase -->
+        <div id="phPin" style="display:none;animation:slideIn .3s ease">
+          <div id="pinSummary" style="padding:16px 18px;border-radius:14px;margin-bottom:16px;background:rgba(155,109,255,.1);border:1px solid rgba(155,109,255,.25);text-align:center">
+            <p id="pinSumTxt" style="font-size:15px;font-weight:700;color:#fff"></p>
+            <p style="font-size:12px;color:var(--mu);margin-top:5px">Enter PIN to confirm</p>
+          </div>
+          <div class="gl" style="padding:28px">
+            <p id="pinInstruct" style="font-size:14px;color:var(--mu);text-align:center;margin-bottom:18px;font-weight:500"></p>
+            <div id="pinDots" style="display:flex;gap:14px;justify-content:center;margin-bottom:22px"></div>
+            <div id="pinPad" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:320px;margin:0 auto"></div>
+            <button id="pinConfirmBtn" onclick="execSend()" class="btn" style="margin-top:20px;opacity:.35;font-size:16px;padding:16px" disabled>
+              <span id="pinConfirmTxt">Confirm & Send</span>
+            </button>
+            <div id="pinErr" style="display:none;margin-top:12px;padding:12px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);border-radius:10px;font-size:13px;color:#ff8080;text-align:center"></div>
+            <p style="text-align:center;font-size:11px;color:rgba(255,255,255,.22);margin-top:14px">🔒 Your PIN is encrypted · Never stored in plain text</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Examples -->
+      <div>
+        <div class="gl" style="padding:24px;margin-bottom:20px">
+          <p class="sec-title">💡 Try these phrases</p>
+          <div id="exList" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+        <div class="gl" style="padding:24px;background:linear-gradient(135deg,rgba(0,255,157,.06),rgba(155,109,255,.06));border:1px solid rgba(0,255,157,.2)">
+          <p class="sec-title">How it works</p>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:32px;height:32px;border-radius:50%;background:var(--p);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">1</div><p style="font-size:13px;color:rgba(255,255,255,.8)">Click mic and speak in any language</p></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:32px;height:32px;border-radius:50%;background:var(--c);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">2</div><p style="font-size:13px;color:rgba(255,255,255,.8)">AI detects your language automatically</p></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:32px;height:32px;border-radius:50%;background:var(--gn);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">3</div><p style="font-size:13px;color:rgba(255,255,255,.8)">Confirm the details shown</p></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:32px;height:32px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">4</div><p style="font-size:13px;color:rgba(255,255,255,.8)">Enter 4-digit PIN → Money sent!</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /VS -->
+
+  <!-- ════════ BALANCE PIN ════════ -->
+  <div id="BPS" class="sc">
+    <p class="page-title">💰 Check Balance</p>
+    <p class="page-sub">Enter your PIN to view account balance securely</p>
+    <div style="max-width:480px;margin:0 auto">
+      <div class="gl" style="padding:28px;text-align:center;margin-bottom:20px;background:linear-gradient(135deg,rgba(0,212,255,.09),rgba(155,109,255,.07));border:1px solid rgba(0,212,255,.22)">
+        <div style="font-size:52px;margin-bottom:12px">💰</div>
+        <p style="font-size:14px;color:var(--mu);line-height:1.6">Balance is PIN-protected for security.<br>Even if someone else opens this page,<br>they cannot see your balance without the PIN.</p>
+      </div>
+      <div class="gl" style="padding:28px">
+        <p style="font-size:13px;color:var(--mu);text-align:center;margin-bottom:18px">🔐 Enter your 4-digit UPI PIN</p>
+        <div id="bpd" style="display:flex;gap:14px;justify-content:center;margin-bottom:22px"></div>
+        <div id="bpp" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:320px;margin:0 auto"></div>
+        <button id="bpBtn" onclick="execBalCheck()" class="btn" style="margin-top:20px;opacity:.35;font-size:16px;padding:16px" disabled>View Balance 💰</button>
+        <div id="bpErr" style="display:none;margin-top:12px;padding:12px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);border-radius:10px;font-size:13px;color:#ff8080;text-align:center"></div>
+      </div>
+    </div>
+  </div><!-- /BPS -->
+
+  <!-- ════════ BALANCE RESULT ════════ -->
+  <div id="BRS" class="sc">
+    <p class="page-title">💰 Your Balance</p>
+    <p class="page-sub" style="color:var(--gn)">✓ PIN verified · Secure view</p>
+    <div style="max-width:480px;margin:0 auto">
+      <div class="gl" style="padding:40px;text-align:center;background:linear-gradient(135deg,rgba(0,255,157,.09),rgba(0,212,255,.07));border:1px solid rgba(0,255,157,.28);margin-bottom:20px;animation:fadeUp .4s ease">
+        <div style="font-size:52px;margin-bottom:10px">🔓</div>
+        <p style="font-size:11px;color:var(--gn);letter-spacing:1.5px;font-weight:700">PIN VERIFIED · SECURE</p>
+        <div style="font-size:52px;font-weight:800;margin-top:16px;background:linear-gradient(135deg,#fff,var(--gn));-webkit-background-clip:text;-webkit-text-fill-color:transparent">₹<span id="brAmt">0</span></div>
+        <p id="brUpi" style="font-size:13px;color:var(--c);font-family:'JetBrains Mono';margin-top:10px">—</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.3);margin-top:10px">Auto-closes in <span id="brTimer">30</span>s for security</p>
+      </div>
+      <button onclick="goTo('VS')" class="btn" style="font-size:16px;padding:16px">Send Money 🎤</button>
+      <button onclick="goTo('HS');resetBP()" class="gbt" style="margin-top:12px;font-size:15px;padding:14px">Back to Home</button>
+    </div>
+  </div><!-- /BRS -->
+
+  <!-- ════════ SUCCESS ════════ -->
+  <div id="SuS" class="sc">
+    <div id="cf" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0"></div>
+    <div style="max-width:560px;margin:0 auto;text-align:center;position:relative;z-index:1;padding-top:20px">
+      <div style="width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--gn),rgba(0,255,157,.5));display:flex;align-items:center;justify-content:center;font-size:56px;margin:0 auto;animation:popIn .7s cubic-bezier(.36,.07,.19,.97);box-shadow:0 0 70px rgba(0,255,157,.8),0 0 140px rgba(0,255,157,.4)">✓</div>
+      <h2 id="sucTitle" style="font-size:32px;font-weight:800;margin-top:24px;color:var(--gn);text-shadow:0 0 24px rgba(0,255,157,.7)">Sent!</h2>
+      <p id="sucSub" style="font-size:15px;color:var(--mu);margin-top:8px">—</p>
+      <div id="sucLangMsg" style="margin-top:16px;padding:14px 18px;background:rgba(0,255,157,.08);border-radius:12px;border:1px solid rgba(0,255,157,.2)">
+        <p id="sucLangTxt" style="font-size:15px;font-weight:600;color:var(--gn)"></p>
+      </div>
+      <div class="gl" id="sucDetails" style="margin-top:20px;padding:24px;text-align:left;border:1px solid rgba(0,255,157,.15)"></div>
+      <button onclick="resetVoice();goTo('VS')" class="btn" style="margin-top:24px;font-size:16px;padding:16px">New Transaction 🎤</button>
+      <button onclick="goTo('HiS')" class="gbt" style="margin-top:12px;font-size:15px;padding:14px">View History →</button>
+    </div>
+  </div><!-- /SuS -->
+
+  <!-- ════════ HISTORY ════════ -->
+  <div id="HiS" class="sc">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div>
+        <p class="page-title">Transaction History</p>
+        <p class="page-sub" style="margin-bottom:0">All your UPI payments</p>
+      </div>
+      <button onclick="loadHist()" style="padding:10px 20px;border-radius:10px;background:rgba(0,212,255,.09);border:1px solid rgba(0,212,255,.3);color:var(--c);font-size:13px;font-weight:600;cursor:pointer;font-family:'Sora'">↻ Refresh</button>
+    </div>
+    <div class="grid3" style="margin-bottom:24px">
+      <div class="gl" style="padding:20px;text-align:center"><p style="font-size:11px;color:var(--mu)">TOTAL SENT</p><p id="hSent" style="font-size:24px;font-weight:800;color:var(--pk);margin-top:6px">₹0</p></div>
+      <div class="gl" style="padding:20px;text-align:center"><p style="font-size:11px;color:var(--mu)">TRANSACTIONS</p><p id="hCount" style="font-size:24px;font-weight:800;color:var(--c);margin-top:6px">0</p></div>
+      <div class="gl" style="padding:20px;text-align:center"><p style="font-size:11px;color:var(--mu)">LANGUAGES</p><p style="font-size:24px;font-weight:800;color:var(--g);margin-top:6px">4</p></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+      <button style="padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--p);background:rgba(155,109,255,.2);color:var(--p);cursor:pointer;font-family:'Sora'" onclick="filH('all',this)">All</button>
+      <button style="padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--mu);cursor:pointer;font-family:'Sora'" onclick="filH('success',this)">✓ Success</button>
+      <button style="padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--mu);cursor:pointer;font-family:'Sora'" onclick="filHL('en',this)">🇬🇧 English</button>
+      <button style="padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--mu);cursor:pointer;font-family:'Sora'" onclick="filHL('hi',this)">🇮🇳 Hindi</button>
+      <button style="padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--mu);cursor:pointer;font-family:'Sora'" onclick="filHL('te',this)">🌸 Telugu</button>
+      <button style="padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--mu);cursor:pointer;font-family:'Sora'" onclick="filHL('ta',this)">🌺 Tamil</button>
+    </div>
+    <div id="hList"><div class="dl" style="text-align:center;padding:40px"><span></span><span></span><span></span></div></div>
+  </div><!-- /HiS -->
+
+  <!-- ════════ SECURITY & PROFILE ════════ -->
+  <div id="PRS" class="sc">
+    <p class="page-title">🔒 Security & Profile</p>
+    <p class="page-sub">How your account is protected</p>
+    <div class="grid2" style="align-items:start">
+      <!-- Left: profile + account info -->
+      <div>
+        <div class="gl" style="padding:28px;text-align:center;margin-bottom:20px">
+          <div id="pav" style="width:90px;height:90px;border-radius:24px;background:linear-gradient(135deg,var(--p),var(--c));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;margin:0 auto;box-shadow:0 0 30px rgba(155,109,255,.5);animation:float 3s ease-in-out infinite">P</div>
+          <h2 id="pn" style="font-size:20px;font-weight:800;margin-top:14px">—</h2>
+          <p id="pu" style="font-size:12px;color:var(--c);font-family:'JetBrains Mono';margin-top:5px">—</p>
+          <div style="display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:7px 18px;border-radius:20px;background:rgba(0,255,157,.1);border:1px solid rgba(0,255,157,.25)">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--gn)"></div>
+            <span style="font-size:12px;color:var(--gn);font-weight:600">Account Active</span>
+          </div>
+        </div>
+        <div class="gl" style="padding:24px;margin-bottom:20px">
+          <p class="sec-title">Account Information</p>
+          <div id="profInfo" style="display:flex;flex-direction:column;gap:14px"></div>
+        </div>
+        <button onclick="doLogout()" style="width:100%;padding:15px;border-radius:12px;background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.25);color:#ff8080;font-size:15px;font-weight:600;cursor:pointer;font-family:'Sora'">Sign Out ⏻</button>
+      </div>
+      <!-- Right: security features -->
+      <div class="gl" style="padding:24px;border:1px solid rgba(0,255,157,.2)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+          <p class="sec-title" style="margin-bottom:0">Security Features</p>
+          <div style="padding:5px 14px;border-radius:20px;background:rgba(0,255,157,.12);border:1px solid rgba(0,255,157,.3);color:var(--gn);font-size:11px;font-weight:700">✅ ALL ACTIVE</div>
+        </div>
+        <div id="secList" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+    </div>
+  </div><!-- /PRS -->
+
+</div><!-- /contentArea -->
+</div><!-- /mainWrap -->
+</div><!-- /AP -->
+
+<div id="tst" style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;padding:12px 22px;border-radius:14px;font-size:13px;font-weight:600;max-width:90vw;text-align:center;white-space:pre-line"></div>
+
+<script>
+'use strict';
+const API = 'http://localhost:5000/api';
+
+const S = {
+  uid:null, name:'', upi:'', bal:0,
+  detectedLang:'en',
+  txns:[], pin:[], bpin:[],
+  listening:false, rec:null,
+  nlpData:null, lastText:'',
+  balVisible:false, balTimer:null,
+};
+
+const LANG = {
+  en:{ code:'en-IN', name:'English', flag:'🇬🇧', color:'#00d4ff',
+       confirmQ:(a,n)=>`Do you want to send ₹${a} to ${n}?`,
+       pinInstruct:'Enter your UPI PIN to send money',
+       pinConfirm:(a,n)=>`Send ₹${a} to ${n}`,
+       successMsg:(a,n)=>`₹${a} sent successfully to ${n}!`,
+       examples:['Send 500 to Ravi','Pay 200 to Anita','Send 100 to Meena'] },
+  hi:{ code:'hi-IN', name:'Hindi', flag:'🇮🇳', color:'#ff6eb4',
+       confirmQ:(a,n)=>`क्या आप ${n} को ₹${a} भेजना चाहती हैं?`,
+       pinInstruct:'पैसे भेजने के लिए अपना UPI PIN डालें',
+       pinConfirm:(a,n)=>`${n} को ₹${a} भेजें`,
+       successMsg:(a,n)=>`${n} को ₹${a} सफलतापूर्वक भेजा गया!`,
+       examples:['रवि को 500 भेजो','अनिता को 200 दो','मीना को 100 पेमेंट करो'] },
+  te:{ code:'te-IN', name:'Telugu', flag:'🌸', color:'#9b6dff',
+       confirmQ:(a,n)=>`మీరు ${n} కి ₹${a} పంపాలనుకుంటున్నారా?`,
+       pinInstruct:'డబ్బు పంపడానికి మీ UPI PIN నమోదు చేయండి',
+       pinConfirm:(a,n)=>`${n} కి ₹${a} పంపండి`,
+       successMsg:(a,n)=>`${n} కి ₹${a} విజయవంతంగా పంపబడింది!`,
+       examples:['రవికి 500 పంపండి','అనితకి 200 పంపండి','మీనాకి 100 ఇవ్వండి'] },
+  ta:{ code:'ta-IN', name:'Tamil', flag:'🌺', color:'#ffd700',
+       confirmQ:(a,n)=>`நீங்கள் ${n}-க்கு ₹${a} அனுப்ப விரும்புகிறீர்களா?`,
+       pinInstruct:'பணம் அனுப்ப உங்கள் UPI PIN ஐ உள்ளிடுக',
+       pinConfirm:(a,n)=>`${n}-க்கு ₹${a} அனுப்பு`,
+       successMsg:(a,n)=>`${n}-க்கு ₹${a} வெற்றிகரமாக அனுப்பப்பட்டது!`,
+       examples:['ரவிக்கு 500 அனுப்பு','அனிதாக்கு 200 கொடு','மீனாக்கு 100 அனுப்பு'] },
+};
+function L(){ return LANG[S.detectedLang]||LANG.en; }
+
+/* ── INIT ── */
+window.addEventListener('DOMContentLoaded',()=>{
+  bgCanvas(); buildWave();
+  buildPinKeypad('pinDots','pinPad','pinConfirmBtn',false);
+  buildPinKeypad('bpd','bpp','bpBtn',true);
+  buildExamples(); buildSecList();
+  clock(); setInterval(clock,1000);
+  const saved=localStorage.getItem('ap_u');
+  if(saved){try{loginOK(JSON.parse(saved));}catch(e){localStorage.removeItem('ap_u');}}
+});
+
+/* ── BG CANVAS ── */
+function bgCanvas(){
+  const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+  const rs=()=>{cv.width=innerWidth;cv.height=innerHeight;};
+  rs(); window.addEventListener('resize',rs);
+  const cols=['#9b6dff','#00d4ff','#ffd700','#ff6eb4','#00ff9d'];
+  const pts=Array.from({length:50},(_,i)=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.5,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,c:cols[i%5],a:Math.random()*.5+.15}));
+  (function fr(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ['rgba(155,109,255,.05)','rgba(0,212,255,.03)'].forEach((c,i)=>{
+      const g=ctx.createRadialGradient(cv.width*(i?.8:.2),cv.height*.5,0,cv.width*(i?.8:.2),cv.height*.5,cv.width*.5);
+      g.addColorStop(0,c);g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,cv.width,cv.height);
+    });
+    ctx.strokeStyle='rgba(155,109,255,.025)';ctx.lineWidth=1;
+    for(let x=0;x<cv.width;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+    for(let y=0;y<cv.height;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>cv.width)p.vx*=-1;if(p.y<0||p.y>cv.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.shadowBlur=12;ctx.shadowColor=p.c;ctx.fill();ctx.globalAlpha=1;ctx.shadowBlur=0;});
+    requestAnimationFrame(fr);
+  })();
+}
+
+function clock(){const e=document.getElementById('clk');if(e)e.textContent=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});}
+
+/* ── WAVEFORM ── */
+function buildWave(){const w=document.getElementById('wf');if(!w)return;w.innerHTML='';for(let i=0;i<28;i++){const b=document.createElement('div');b.className='wb';b.style.setProperty('--wh',(Math.sin(i*.7)*20+18)+'px');w.appendChild(b);}}
+function waveActive(on){document.querySelectorAll('.wb').forEach(b=>{if(on){b.classList.add('on');b.style.animationDuration=(0.3+Math.random()*.35)+'s';b.style.animationDelay=(Math.random()*.2)+'s';}else{b.classList.remove('on');b.style.height='5px';}});}
+
+/* ── EXAMPLES ── */
+function buildExamples(){
+  const el=document.getElementById('exList');if(!el)return;el.innerHTML='';
+  [...LANG.en.examples,...LANG.hi.examples.slice(0,1),...LANG.te.examples.slice(0,1),...LANG.ta.examples.slice(0,1)].forEach(ex=>{
+    const d=document.createElement('div');d.className='gl';
+    d.style.cssText='padding:12px 16px;cursor:pointer;transition:all .2s';
+    d.innerHTML='<p style="font-size:13px;color:var(--mu)">💬 '+ex+'</p>';
+    d.onmouseenter=()=>d.style.borderColor='rgba(155,109,255,.4)';
+    d.onmouseleave=()=>d.style.borderColor='rgba(255,255,255,.09)';
+    d.onclick=()=>processSpokenText(ex);
+    el.appendChild(d);
+  });
+}
+
+/* ── SECURITY LIST ── */
+function buildSecList(){
+  const el=document.getElementById('secList');if(!el)return;
+  [['🔒','var(--gn)','Secure PIN Authentication','Every transaction and balance check needs your 4-digit PIN. Only SHA-256 hash stored — never plain text.'],
+   ['🛡','var(--p)','256-bit AES Encryption','All data encrypted with AES-256 — same as banks and military. Encrypted in transit and at rest.'],
+   ['📱','var(--g)','Offline SMS Fallback','No internet? SMS-based fallback via Twilio works in zero-connectivity rural areas.'],
+   ['⚡','var(--c)','Instant IMPS Transfer','NPCI UPI via IMPS — real-time, 24/7, 365 days. Funds arrive in seconds.'],
+   ['📊','var(--pk)','Analytics & History','All transactions logged with language, timestamp, amount, recipient.'],
+   ['✅','var(--g)','RBI Compliant','Follows NPCI UPI standards and RBI guidelines for digital payments.'],
+  ].forEach(([i,c,t,d])=>{
+    const el2=document.getElementById('secList');
+    const div=document.createElement('div');
+    div.style.cssText='padding:14px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07)';
+    div.innerHTML='<div style="display:flex;align-items:flex-start;gap:12px"><span style="font-size:20px;flex-shrink:0">'+i+'</span><div><p style="font-size:13px;font-weight:700;color:'+c+'">'+t+'</p><p style="font-size:12px;color:var(--mu);margin-top:4px;line-height:1.5">'+d+'</p></div><span style="color:'+c+';font-size:15px;flex-shrink:0;margin-top:2px">✓</span></div>';
+    el2.appendChild(div);
+  });
+}
+
+/* ── NAV ── */
+function goTo(id){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  const sc=document.getElementById(id);if(sc)sc.classList.add('on');
+  /* Top nav */
+  document.querySelectorAll('[id^="nl-"]').forEach(b=>b.classList.remove('on'));
+  const nl=document.getElementById('nl-'+id);if(nl)nl.classList.add('on');
+  /* Sidebar */
+  document.querySelectorAll('[id^="sb-"]').forEach(b=>b.classList.remove('on'));
+  const sb=document.getElementById('sb-'+id);if(sb)sb.classList.add('on');
+  if(id==='HiS')loadHist();
+  if(id==='PRS')loadProf();
+  /* Scroll to top */
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── STEP INDICATOR ── */
+function setStep(n){
+  [1,2,3].forEach(i=>{
+    const dot=document.getElementById('s'+i+'dot'),txt=document.getElementById('s'+i+'txt');
+    const active=i<=n;
+    if(dot){dot.style.background=active?'var(--p)':'rgba(255,255,255,.08)';dot.style.color=active?'#fff':'rgba(255,255,255,.4)';dot.style.border=active?'none':'1px solid rgba(255,255,255,.15)';}
+    if(txt)txt.style.color=active?'var(--p)':'rgba(255,255,255,.35)';
+  });
+}
+
+/* ── LOGIN ── */
+async function doLogin(){
+  const phone=document.getElementById('lph').value.trim(),pin=document.getElementById('lpn').value.trim();
+  const er=document.getElementById('ler'),bt=document.getElementById('lbt');
+  er.style.display='none';
+  if(!phone||!pin){er.textContent='Please enter phone and PIN';er.style.display='block';return;}
+  bt.textContent='Signing in...';bt.disabled=true;
+  try{
+    const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,pin})});
+    const d=await r.json();
+    if(!r.ok){er.textContent=d.error||'Login failed';er.style.display='block';return;}
+    localStorage.setItem('ap_u',JSON.stringify(d));
+    loginOK(d);
+  }catch(e){er.textContent='Cannot reach server.\n\nMake sure Flask is running:\n  python app.py\n\nThen open: http://localhost:5000';er.style.display='block';}
+  finally{bt.textContent='Sign In 🎤';bt.disabled=false;}
+}
+
+function loginOK(d){
+  S.uid=d.user_id;S.name=d.name;S.upi=d.upi_id;S.bal=d.balance;
+  T('hn',d.name);T('hu',d.upi_id);
+  T('sbName',d.name);T('sbUpi',d.upi_id);T('navUpi',d.upi_id);
+  A('sbAvatar','textContent',d.name[0].toUpperCase());
+  A('pav','textContent',d.name[0].toUpperCase());
+  A('navAv','textContent',d.name[0].toUpperCase());
+  const h=new Date().getHours();
+  T('gr',(h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening')+' 👋');
+  document.getElementById('LP').style.display='none';
+  document.getElementById('AP').style.display='block';
+  document.getElementById('navLinks').style.display='flex';
+  document.getElementById('navUser').style.display='flex';
+  document.getElementById('secLive').style.display='block';
+  document.body.classList.add('loggedin');
+  loadStats();loadHist();
+  toast('Welcome back, '+d.name.split(' ')[0]+'! 👋','success');
+}
+
+function doLogout(){
+  localStorage.removeItem('ap_u');
+  document.getElementById('AP').style.display='none';
+  document.getElementById('LP').style.display='flex';
+  document.getElementById('navLinks').style.display='none';
+  document.getElementById('navUser').style.display='none';
+  document.getElementById('secLive').style.display='none';
+  document.body.classList.remove('loggedin');
+  document.getElementById('lpn').value='';S.uid=null;S.balVisible=false;
+}
+
+/* ── BALANCE ── */
+function toggleBal(){
+  S.balVisible=!S.balVisible;
+  const bm=document.getElementById('balMasked'),br=document.getElementById('balReal'),be=document.getElementById('balEye');
+  if(S.balVisible){bm.style.display='none';br.style.display='block';be.textContent='🙈';}
+  else{bm.style.display='block';br.style.display='none';be.textContent='👁';}
+}
+
+/* ── API ── */
+async function api(path,method='GET',body=null){const o={method,headers:{'Content-Type':'application/json'}};if(body)o.body=JSON.stringify(body);return fetch(API+path,o);}
+
+async function loadStats(){try{const r=await api('/users/'+S.uid+'/stats'),d=await r.json();T('stxn',d.txn_count);T('hSent','₹'+fmt(d.total_sent));T('hCount',d.txn_count);}catch(e){}}
+async function loadHist(){
+  try{const r=await api('/transactions/history?user_id='+S.uid+'&limit=50'),d=await r.json();S.txns=d.transactions||[];rendHist(S.txns);loadStats();}
+  catch(e){document.getElementById('hList').innerHTML='<p style="text-align:center;color:var(--mu);padding:30px">Could not load</p>';}
+}
+async function loadProf(){
+  try{const r=await api('/auth/me?user_id='+S.uid),d=await r.json();
+  T('pn',d.name);T('pu',d.upi_id);A('pav','textContent',d.name[0].toUpperCase());
+  const pi=document.getElementById('profInfo');if(!pi)return;
+  pi.innerHTML=[['👤','Name',d.name],['📱','Phone',d.phone||'—'],['💳','UPI ID',d.upi_id],['💰','Balance','₹'+fmt(d.balance)],['📅','Since',(d.created_at||'').split(' ')[0]]]
+  .map(([ic,k,v])=>'<div style="display:flex;align-items:center;gap:14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.05)"><div style="width:36px;height:36px;border-radius:10px;background:rgba(155,109,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">'+ic+'</div><div><p style="font-size:10px;color:var(--mu)">'+k+'</p><p style="font-size:13px;font-weight:600;margin-top:3px;font-family:'+(k==='UPI ID'?'JetBrains Mono':'Sora')+'">'+v+'</p></div></div>').join('');}
+  catch(e){}
+}
+
+/* ── HISTORY ── */
+function rendHist(txns){
+  const el=document.getElementById('hList');if(!el)return;
+  if(!txns.length){el.innerHTML='<p style="text-align:center;color:var(--mu);padding:40px;font-size:14px">No transactions yet</p>';return;}
+  el.innerHTML=txns.map((tx,i)=>{
+    const li={en:'🇬🇧',hi:'🇮🇳',te:'🌸',ta:'🌺'}[tx.language_used]||'💸';
+    const ll={en:'English',hi:'Hindi',te:'Telugu',ta:'Tamil'}[tx.language_used]||tx.language_used;
+    const ok=tx.status==='success';
+    return '<div class="gl" style="display:flex;align-items:center;gap:16px;padding:18px 20px;margin-bottom:12px;animation:fadeUp .4s ease;animation-delay:'+i*.04+'s;transition:all .2s" onmouseenter="this.style.borderColor=\'rgba(155,109,255,.3)\'" onmouseleave="this.style.borderColor=\'rgba(255,255,255,.09)\'">'
+      +'<div style="width:52px;height:52px;border-radius:14px;background:rgba(155,109,255,.1);border:1px solid rgba(155,109,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">'+li+'</div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<p style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+tx.receiver_name+'</p>'
+      +'<p style="font-size:11px;color:var(--mu);margin-top:3px;font-family:\'JetBrains Mono\'">'+tx.txn_id+'</p>'
+      +'<p style="font-size:10px;color:rgba(255,255,255,.3);margin-top:3px">'+tx.created_at+' · '+ll+'</p>'
+      +'</div>'
+      +'<div style="text-align:right;flex-shrink:0">'
+      +'<p style="font-size:18px;font-weight:800;color:var(--pk)">-₹'+tx.amount+'</p>'
+      +'<span style="margin-top:5px;display:inline-block;padding:3px 10px;border-radius:7px;font-size:10px;font-weight:700;text-transform:uppercase;background:'+(ok?'rgba(0,255,157,.1)':'rgba(255,80,80,.1)')+';color:'+(ok?'var(--gn)':'#ff8080')+'">'+tx.status+'</span>'
+      +'</div></div>';
+  }).join('');
+}
+function filH(s,b){document.querySelectorAll('[onclick^="filH"],[onclick^="filHL"]').forEach(x=>{x.style.borderColor='rgba(255,255,255,.12)';x.style.background='transparent';x.style.color='var(--mu)';});b.style.borderColor='var(--p)';b.style.background='rgba(155,109,255,.2)';b.style.color='var(--p)';rendHist(s==='all'?S.txns:S.txns.filter(t=>t.status===s));}
+function filHL(l,b){document.querySelectorAll('[onclick^="filH"],[onclick^="filHL"]').forEach(x=>{x.style.borderColor='rgba(255,255,255,.12)';x.style.background='transparent';x.style.color='var(--mu)';});b.style.borderColor='var(--p)';b.style.background='rgba(155,109,255,.2)';b.style.color='var(--p)';rendHist(S.txns.filter(t=>t.language_used===l));}
+
+/* ── BALANCE PIN CHECK ── */
+async function execBalCheck(){
+  const er=document.getElementById('bpErr'),bt=document.getElementById('bpBtn');
+  er.style.display='none';bt.textContent='Loading...';bt.disabled=true;
+  try{
+    const r=await api('/transactions/balance?user_id='+S.uid),d=await r.json();
+    if(!r.ok){er.textContent='Error';er.style.display='block';return;}
+    S.bal=d.balance;
+    const br=document.getElementById('balReal');if(br)br.textContent=fmt(d.balance);
+    T('brAmt',fmt(d.balance));T('brUpi',S.upi);
+    goTo('BRS');resetBP();
+    let sec=30;T('brTimer',sec);
+    clearInterval(S.balTimer);
+    S.balTimer=setInterval(()=>{sec--;T('brTimer',sec);if(sec<=0){clearInterval(S.balTimer);goTo('HS');}},1000);
+  }catch(e){er.textContent='Server error';er.style.display='block';}
+  finally{bt.textContent='View Balance 💰';bt.disabled=S.bpin.length<4;}
+}
+function resetBP(){S.bpin=[];renderDots('bpd',S.bpin);const b=document.getElementById('bpBtn');if(b){b.disabled=true;b.style.opacity='.35';}}
+
+/* ── SPEECH ── */
+const SRC=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+
+function toggleListen(){
+  if(!SRC){toast('Open in Google Chrome for voice recognition','error');return;}
+  if(S.listening&&S.rec){S.rec.stop();return;}
+  showPhase('mic');
+  document.getElementById('liveBox').style.display='none';
+  document.getElementById('liveTxt').textContent='';
+  S.rec=new SRC();
+  S.rec.continuous=false;S.rec.interimResults=true;S.rec.maxAlternatives=1;
+  S.rec.lang='';
+  S.rec.onstart=()=>{S.listening=true;setMicUI('listening');setStep(1);};
+  S.rec.onresult=evt=>{
+    let interim='',final='';
+    for(let i=evt.resultIndex;i<evt.results.length;i++){const t=evt.results[i][0].transcript;if(evt.results[i].isFinal)final+=t;else interim+=t;}
+    const text=final||interim;
+    document.getElementById('liveBox').style.display='block';
+    document.getElementById('liveTxt').textContent=text;
+    if(final){S.lastText=final;processSpokenText(final);}
+  };
+  S.rec.onerror=evt=>{
+    S.listening=false;setMicUI('idle');
+    const msgs={'not-allowed':'🔴 Mic blocked!\nClick 🔒 in Chrome address bar → Microphone → Allow → Refresh.','no-speech':'No speech detected. Please speak clearly.','audio-capture':'No microphone found.','network':'Network error.','aborted':''};
+    const m=msgs[evt.error];if(m)toast(m,'error');
+  };
+  S.rec.onend=()=>{S.listening=false;if(document.getElementById('phConfirm').style.display==='none'&&document.getElementById('phPin').style.display==='none')setMicUI('idle');};
+  try{S.rec.start();}catch(err){toast('Could not start mic. Refresh and try again.','error');}
+}
+
+function setMicUI(state){
+  const mb=document.getElementById('micBtn'),st=document.getElementById('micStatus'),ht=document.getElementById('micHint'),box=document.getElementById('micStatusBox');
+  if(state==='listening'){mb.textContent='🔴';mb.style.background='linear-gradient(135deg,#00d4ff,#9b6dff)';mb.style.boxShadow='0 0 60px rgba(0,212,255,.9),0 0 120px rgba(0,212,255,.5)';mb.style.animation='micPulse .7s ease-in-out infinite';st.textContent='● Listening... Speak now';st.style.color='var(--c)';ht.textContent='Any language — Telugu, Hindi, Tamil, English';if(box){box.style.background='rgba(0,212,255,.08)';box.style.borderColor='rgba(0,212,255,.3)';}waveActive(true);}
+  else if(state==='processing'){mb.textContent='⏳';mb.style.background='linear-gradient(135deg,var(--g),var(--pk))';mb.style.animation='glowP 2s ease-in-out infinite';st.textContent='Detecting language...';st.style.color='var(--g)';ht.textContent='AI is processing your speech';if(box){box.style.background='rgba(255,215,0,.06)';box.style.borderColor='rgba(255,215,0,.25)';}waveActive(false);}
+  else{mb.textContent='🎤';mb.style.background='linear-gradient(135deg,var(--p),var(--c))';mb.style.boxShadow='0 0 40px rgba(155,109,255,.6),0 0 80px rgba(155,109,255,.3)';mb.style.animation='glowP 2.5s ease-in-out infinite';st.textContent='▶ Click the microphone to speak';st.style.color='var(--mu)';ht.textContent='Telugu, Hindi, Tamil, English — any language';if(box){box.style.background='rgba(155,109,255,.08)';box.style.borderColor='rgba(155,109,255,.2)';}waveActive(false);}
+}
+
+function showPhase(name){
+  document.getElementById('phMic').style.display     =name==='mic'    ?'flex':'none';
+  document.getElementById('phConfirm').style.display =name==='confirm'?'block':'none';
+  document.getElementById('phPin').style.display     =name==='pin'    ?'block':'none';
+}
+
+/* ── PROCESS SPEECH ── */
+async function processSpokenText(text){
+  if(!text.trim())return;
+  setMicUI('processing');
+  setStep(1);
+  try{
+    const r=await fetch(API+'/voice/process',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,user_id:S.uid})});
+    const d=await r.json();S.nlpData=d;S.detectedLang=d.language||'en';
+    const badge=document.getElementById('langBadge');
+    if(badge){badge.textContent=L().flag+' '+L().name;badge.style.display='block';badge.style.color=L().color;badge.style.borderColor=L().color+'77';badge.style.background=L().color+'22';}
+    if(d.ready_to_send){showConfirmPhase(d);speak(d.response_text);}
+    else if(d.intent==='check_balance'){setMicUI('idle');goTo('BPS');}
+    else{setMicUI('idle');showPhase('mic');toast('Could not detect amount or recipient.\nTry: "Send 500 to Ravi"','warning');}
+  }catch(e){setMicUI('idle');toast('Server not reachable. Is Flask running?','error');}
+}
+
+function showConfirmPhase(d){
+  setMicUI('idle');showPhase('confirm');setStep(2);
+  document.getElementById('cfErr').style.display='none';
+  const banner=document.getElementById('langBanner');
+  banner.style.background=L().color+'18';banner.style.borderColor=L().color+'55';
+  T('langBannerTxt',L().flag+' '+L().name+' detected');T('langBannerSub','Continuing in '+L().name);
+  T('cfHeard',S.lastText);
+  const name=d.recipient?d.recipient.name:'—',amt=d.amount||'—';
+  T('cfRecipient',name);T('cfAmount',amt?'₹'+amt:'—');
+  T('cfQuestion',L().confirmQ(amt,name));
+}
+
+function goToPin(){
+  const d=S.nlpData;if(!d||!d.ready_to_send)return;
+  const name=d.recipient.name,amt=d.amount;
+  showPhase('pin');setStep(3);
+  T('pinSumTxt',L().pinConfirm(amt,name));
+  T('pinInstruct',L().pinInstruct);
+  T('pinConfirmTxt',L().pinConfirm(amt,name));
+  S.pin=[];renderDots('pinDots',S.pin);
+  document.getElementById('pinErr').style.display='none';
+  const pb=document.getElementById('pinConfirmBtn');pb.disabled=true;pb.style.opacity='.35';
+}
+
+/* ── SEND ── */
+async function execSend(){
+  const d=S.nlpData;if(!d)return;
+  const er=document.getElementById('pinErr'),btn=document.getElementById('pinConfirmBtn');
+  er.style.display='none';
+  if(S.pin.length<4){toast('Enter at least 4 digits','warning');return;}
+  btn.textContent='Sending...';btn.disabled=true;
+  const rec=d.recipient,upi=rec.upi_id||rec.name.toLowerCase().replace(/\s+/g,'')+'@upi';
+  try{
+    const r=await fetch(API+'/transactions/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sender_id:S.uid,receiver_upi:upi,receiver_name:rec.name,amount:d.amount,pin:S.pin.join(''),voice_command:S.lastText,language:S.detectedLang})});
+    const data=await r.json();
+    if(!r.ok||!data.success){er.textContent=data.error||'Transaction failed. Check your PIN.';er.style.display='block';T('pinConfirmTxt',L().pinConfirm(d.amount,rec.name));btn.disabled=false;btn.style.opacity='1';return;}
+    S.bal=data.new_balance;
+    const br=document.getElementById('balReal');if(br)br.textContent=fmt(data.new_balance);
+    showSuccess(data,rec.name,d.amount);speak(L().successMsg(d.amount,rec.name));
+  }catch(e){er.textContent='Cannot connect to server. Is Flask running?';er.style.display='block';T('pinConfirmTxt',L().pinConfirm(d.amount,rec.name));btn.disabled=false;btn.style.opacity='1';}
+}
+
+function showSuccess(data,recipientName,amount){
+  T('sucTitle','₹'+amount+' Sent!');T('sucSub','to '+recipientName+' · '+L().flag+' '+L().name);
+  T('sucLangTxt',L().successMsg(amount,recipientName));
+  document.getElementById('sucDetails').innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">'
+    +[['Recipient',recipientName],['Amount','₹'+amount],['Txn ID',data.txn_id],['Type',data.txn_type||'IMPS'],['New Balance','₹'+fmt(data.new_balance)],['Status','✓ Success']]
+    .map(([k,v])=>'<div><p style="font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.8px">'+k+'</p><p style="font-size:14px;font-weight:700;margin-top:4px;color:'+(k==='Status'?'var(--gn)':'inherit')+';word-break:break-all;font-family:'+(k==='Txn ID'?'JetBrains Mono':'Sora')+'">'+v+'</p></div>').join('')+'</div>';
+  confetti();goTo('SuS');loadHist();loadStats();
+}
+
+function afterSuc(){resetVoice();goTo('VS');}
+
+/* ── CONFETTI ── */
+function confetti(){
+  const box=document.getElementById('cf');if(!box)return;box.innerHTML='';
+  const cols=['#9b6dff','#00d4ff','#ffd700','#ff6eb4','#00ff9d'];
+  for(let i=0;i<50;i++){const p=document.createElement('div');const c=cols[i%5],sz=Math.random()*7+4,fx=(Math.random()-.5)*300;p.style.cssText='position:fixed;left:'+Math.random()*100+'%;top:20%;width:'+sz+'px;height:'+sz+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';background:'+c+';box-shadow:0 0 '+(sz*2)+'px '+c+';--fx:'+fx+'px;animation:fly '+(Math.random()*.8+.8)+'s '+(Math.random()*.4)+'s ease-out forwards;opacity:.9';box.appendChild(p);}
+  setTimeout(()=>box.innerHTML='',3000);
+}
+
+/* ── TTS ── */
+function speak(text){if(!window.speechSynthesis||!text)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=L().code;u.rate=0.88;window.speechSynthesis.speak(u);}
+
+/* ── RESET ── */
+function resetVoice(){
+  S.nlpData=null;S.lastText='';S.pin=[];S.detectedLang='en';
+  showPhase('mic');setStep(1);setMicUI('idle');renderDots('pinDots',[]);
+  document.getElementById('liveBox').style.display='none';
+  document.getElementById('liveTxt').textContent='';
+  document.getElementById('langBadge').style.display='none';
+  const pb=document.getElementById('pinConfirmBtn');if(pb){pb.disabled=true;pb.style.opacity='.35';}
+}
+
+/* ── PIN KEYPAD ── */
+function buildPinKeypad(dotsId,padId,btnId,isBal){
+  const dd=document.getElementById(dotsId);if(!dd)return;dd.innerHTML='';
+  for(let i=0;i<4;i++){const d=document.createElement('div');d.className='pd';d.id=dotsId+'d'+i;dd.appendChild(d);}
+  const pp=document.getElementById(padId);if(!pp)return;pp.innerHTML='';
+  [1,2,3,4,5,6,7,8,9,'',0,'⌫'].forEach(n=>{
+    const b=document.createElement('button');
+    b.style.cssText='padding:18px;border-radius:12px;font-size:20px;font-weight:700;background:'+(n===''?'transparent':'rgba(255,255,255,.05)')+';border:'+(n===''?'none':'1px solid rgba(255,255,255,.09)')+';color:'+(n===''?'transparent':'#fff')+';cursor:'+(n===''?'default':'pointer')+';font-family:Sora;transition:all .15s;width:100%';
+    b.textContent=n;
+    if(n!==''){b.onmousedown=()=>b.style.transform='scale(.92)';b.onmouseup=()=>b.style.transform='';b.onclick=()=>{const arr=isBal?S.bpin:S.pin;if(n==='⌫')arr.pop();else if(arr.length<4)arr.push(n);renderDots(dotsId,arr);const btn=document.getElementById(btnId);if(btn){btn.disabled=arr.length<4;btn.style.opacity=arr.length>=4?'1':'.35';}};}
+    pp.appendChild(b);
+  });
+}
+
+function renderDots(dotsId,arr){
+  for(let i=0;i<4;i++){const d=document.getElementById(dotsId+'d'+i);if(!d)continue;if(i<arr.length){d.classList.add('fl');d.innerHTML='<div style="width:14px;height:14px;border-radius:50%;background:var(--p);box-shadow:0 0 12px var(--p)"></div>';}else{d.classList.remove('fl');d.innerHTML='';}}
+}
+
+/* ── TOAST ── */
+const TS={success:{bg:'rgba(0,255,157,.12)',b:'rgba(0,255,157,.4)',c:'var(--gn)'},error:{bg:'rgba(255,80,80,.12)',b:'rgba(255,80,80,.4)',c:'#ff8080'},warning:{bg:'rgba(255,215,0,.12)',b:'rgba(255,215,0,.4)',c:'var(--g)'},info:{bg:'rgba(155,109,255,.12)',b:'rgba(155,109,255,.4)',c:'var(--p)'}};
+function toast(m,t='info'){const el=document.getElementById('tst'),s=TS[t]||TS.info;el.textContent=m;el.style.cssText='display:block;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;padding:12px 22px;border-radius:14px;font-size:13px;font-weight:600;animation:toastIn .3s ease;background:'+s.bg+';border:1px solid '+s.b+';color:'+s.c+';backdrop-filter:blur(20px);font-family:Sora;white-space:pre-line;max-width:90vw;text-align:center';clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',4500);}
+
+/* ── UTIL ── */
+function fmt(n){return Number(n||0).toLocaleString('en-IN');}
+function T(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function A(id,a,v){const e=document.getElementById(id);if(e)e[a]=v;}
+</script>
+</body>
+</html>
